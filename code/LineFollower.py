@@ -66,13 +66,6 @@ while True:
     elif sensorvalue=="011":
         MotorsSpeed(s1,0.3)
         counter=0
-    #Αν δεν ισχύει τίποτα από αυτά και την τελευταία φορά είδε γραμμή μόνο ο δεξιός αισθητήρας ή είδαν ο δεξιός και ο μεσαίος αισθητήρας, τότε, αν δε βλέπει γραμμή κανένας αισθητήρας ή βλέπουν όλοι, ξεκινά να στρίβει δεξιά και περιμένει μέχρι να μην ισχύει αυτό (επίσης, στο τέλος μηδενίζεται η μεταβλητή counter)
-    elif lastvalue=="001" or lastvalue=="011":
-        if sensorvalue=="000" or sensorvalue=="111":
-            MotorsSpeed(1,0)
-        while sensorvalue=="000" or sensorvalue=="111":
-            sensorvalue=SensorRead()
-        counter=0
     #Αν δεν ισχύει τίποτα από αυτά και την τελευταία φορά είδε γραμμή μόνο ο αριστερός αισθητήρας ή είδαν ο αριστερός και ο μεσαίος αισθητήρας, τότε, αν δε βλέπει γραμμή κανένας αισθητήρας ή βλέπουν όλοι, ξεκινά να στρίβει αριστερά και περιμένει μέχρι να μην ισχύει αυτό (επίσης, στο τέλος μηδενίζεται η μεταβλητή counter)
     elif lastvalue=="100" or lastvalue=="110":
         if sensorvalue=="000" or sensorvalue=="111":
@@ -80,7 +73,14 @@ while True:
         while sensorvalue=="000" or sensorvalue=="111":
             sensorvalue=SensorRead()
         counter=0
+    #Αν δεν ισχύει τίποτα από αυτά, τότε, αν δε βλέπει γραμμή κανένας αισθητήρας ή βλέπουν όλοι, ξεκινά να στρίβει δεξιά και περιμένει μέχρι να μην ισχύει αυτό (επίσης, στο τέλος μηδενίζεται η μεταβλητή counter)
+    else:
+        if sensorvalue=="000" or sensorvalue=="111":
+            MotorsSpeed(1,0)
+        while sensorvalue=="000" or sensorvalue=="111":
+            sensorvalue=SensorRead()
+        counter=0
     #Επίσης, αν δει γραμμή μόνο ο αριστερός ή μόνο ο δεξιός αισθητήρας, τότε η μεταβλητή counter αυξάνεται, αλλιώς μηδενίζεται
-    #Τέλος, οι μεταβλητές lastvalue και sensorvalue μηδενίζονται
+    #Τέλος, οι μεταβλητές lastvalue και sensorvalue ανανεώνονται
     lastvalue=sensorvalue
     sensorvalue=SensorRead()
